@@ -132,7 +132,7 @@ function SectionHeading({ eyebrow, title, copy }: { eyebrow: string; title: stri
 
 function Header() {
   const [open, setOpen] = useState(false);
-  const links = [["Services", "#services"], ["About", "#about"], ["Process", "#process"], ["Pricing", "#pricing"], ["Contact", "#contact"]];
+  const links = [["Services", "#services"], ["About", "#about"], ["Process", "#process"], ["Contact", "#contact"]];
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-12">
