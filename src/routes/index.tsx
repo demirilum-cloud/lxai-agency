@@ -6,6 +6,7 @@ import {
   Check,
   ChevronDown,
   Globe2,
+  MapPin,
   Menu,
   MessageSquareText,
   PhoneCall,
