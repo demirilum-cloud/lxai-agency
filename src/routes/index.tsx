@@ -99,7 +99,7 @@ function useReveal() {
     if (!node) return;
     const observer = new IntersectionObserver(([entry]) => {
       if (entry?.isIntersecting) {
-        node.dataset.visible = "true";
+        node.dataset["visible"] = "true";
         observer.disconnect();
       }
     }, { threshold: 0.12 });
@@ -242,11 +242,11 @@ function ContactSection() {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const next: Record<string, string> = {};
-    if (!String(form.get("name") ?? "").trim()) next.name = "Please enter your name.";
+    if (!String(form.get("name") ?? "").trim()) next["name"] = "Please enter your name.";
     const email = String(form.get("email") ?? "").trim();
-    if (!/^\S+@\S+\.\S+$/.test(email)) next.email = "Please enter a valid email.";
-    if (!String(form.get("business") ?? "").trim()) next.business = "Please select a business type.";
-    if (String(form.get("message") ?? "").trim().length < 10) next.message = "Tell us a little more about your project.";
+    if (!/^\S+@\S+\.\S+$/.test(email)) next["email"] = "Please enter a valid email.";
+    if (!String(form.get("business") ?? "").trim()) next["business"] = "Please select a business type.";
+    if (String(form.get("message") ?? "").trim().length < 10) next["message"] = "Tell us a little more about your project.";
     setErrors(next);
     if (Object.keys(next).length === 0) setSent(true);
   }
@@ -254,11 +254,11 @@ function ContactSection() {
     <section id="contact" className="section-space bg-foreground text-background"><div className="page-shell"><Reveal><div className="grid gap-8 border-t border-inverse-border pt-8 lg:grid-cols-[1fr_2fr]"><p className="section-label text-inverse-muted">07 / Start a project</p><h2 className="font-display text-5xl font-black leading-[0.9] tracking-normal sm:text-7xl lg:text-8xl">Ready to make<br /><span className="text-inverse-muted">work work better?</span></h2></div></Reveal>
       <div className="mt-16 grid gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:gap-20">
         <Reveal>{sent ? <div className="flex min-h-[32rem] flex-col items-start justify-center border border-inverse-border p-8 sm:p-12"><div className="flex size-12 items-center justify-center rounded-full border border-inverse-border"><Check /></div><h3 className="mt-8 font-display text-4xl font-bold tracking-normal">Message received.</h3><p className="mt-4 max-w-md leading-7 text-inverse-muted">Thanks for reaching out. Your details are ready for review, and we’ll be in touch soon.</p><Button variant="inverseOutline" className="mt-8" onClick={() => setSent(false)}>Send another message</Button></div> : <form onSubmit={submit} noValidate className="grid gap-7 sm:grid-cols-2">
-          <Field label="Your name" name="name" placeholder="Name" error={errors.name} />
-          <Field label="Work email" name="email" type="email" placeholder="you@company.com" error={errors.email} />
-          <label className="field-label">Business type<select name="business" defaultValue="" className="field-control"><option value="" disabled>Select an industry</option>{industries.map(item => <option key={item}>{item}</option>)}<option>Other</option></select>{errors.business ? <span className="field-error">{errors.business}</span> : null}</label>
+          <Field label="Your name" name="name" placeholder="Name" error={errors["name"]} />
+          <Field label="Work email" name="email" type="email" placeholder="you@company.com" error={errors["email"]} />
+          <label className="field-label">Business type<select name="business" defaultValue="" className="field-control"><option value="" disabled>Select an industry</option>{industries.map(item => <option key={item}>{item}</option>)}<option>Other</option></select>{errors["business"] ? <span className="field-error">{errors["business"]}</span> : null}</label>
           <div className="hidden sm:block" />
-          <label className="field-label sm:col-span-2">How can we help?<textarea name="message" rows={5} placeholder="Tell us about the challenge, idea, or result you have in mind." className="field-control resize-none" />{errors.message ? <span className="field-error">{errors.message}</span> : null}</label>
+          <label className="field-label sm:col-span-2">How can we help?<textarea name="message" rows={5} placeholder="Tell us about the challenge, idea, or result you have in mind." className="field-control resize-none" />{errors["message"] ? <span className="field-error">{errors["message"]}</span> : null}</label>
           <div className="sm:col-span-2"><Button type="submit" variant="inverse" size="xl">Send enquiry <ArrowRight /></Button></div>
         </form>}</Reveal>
         <Reveal><aside className="border-t border-inverse-border pt-7"><p className="section-label text-inverse-muted">Prefer a conversation?</p><div className="mt-8 border border-inverse-border p-7"><CalendarDays className="size-6" /><h3 className="mt-10 font-display text-2xl font-bold tracking-normal">Book a discovery call</h3><p className="mt-3 text-sm leading-6 text-inverse-muted">Choose a convenient time to discuss your goals and see where automation can create the most value.</p><Button asChild variant="inverseOutline" className="mt-8 w-full"><a href="mailto:hello@lxai.agency?subject=Discovery call request">Request a time <ArrowRight /></a></Button><p className="mt-4 text-center text-xs text-inverse-muted">Calendar availability provided after request</p></div><div className="mt-10 space-y-4 text-sm"><a href="mailto:hello@lxai.agency" className="flex items-center gap-3 text-inverse-muted transition-colors hover:text-background"><MessageSquareText className="size-4" /> hello@lxai.agency</a><p className="flex items-center gap-3 text-inverse-muted"><PhoneCall className="size-4" /> Prizren, Kosovo</p></div></aside></Reveal>
@@ -267,7 +267,7 @@ function ContactSection() {
   );
 }
 
-function Field({ label, name, type = "text", placeholder, error }: { label: string; name: string; type?: string; placeholder: string; error?: string }) {
+function Field({ label, name, type = "text", placeholder, error }: { label: string; name: string; type?: string; placeholder: string; error: string | undefined }) {
   return <label className="field-label">{label}<input name={name} type={type} placeholder={placeholder} className="field-control" />{error ? <span className="field-error">{error}</span> : null}</label>;
 }
 
